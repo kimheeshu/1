@@ -53,36 +53,6 @@
     .section { max-width: 960px; margin: 0 auto; padding: 64px 24px; }
     h2 { font-size: 2rem; margin-bottom: 1rem; }
 
-    #intro-gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 40px;
-      padding: 0 16px;
-    }
-    .intro-highlight {
-      flex: 1 1 45%;
-      max-width: 600px;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-    .intro-highlight:hover {
-      transform: scale(1.02);
-    }
-    @media (max-width: 768px) {
-      .intro-highlight {
-        flex: 1 1 100%;
-        aspect-ratio: auto;
-        width: 100%;
-        height: auto;
-      }
-    }
-
     .toggle-theme {
       position: fixed;
       top: 16px; right: 24px;
@@ -107,10 +77,6 @@
     <a href="#projects">프로젝트</a>
     <a href="#contact">문의</a>
   </nav>
-
-  <div class="section" id="intro-top">
-    <div id="intro-gallery"></div>
-  </div>
 
   <section class="section" id="intro">
     <h2>소개</h2>
@@ -149,16 +115,6 @@
       localStorage.setItem('theme', cur);
       setIcon();
     };
-
-    const introGallery = document.getElementById("intro-gallery");
-    ["10.png", "3.png"].forEach((src, idx) => {
-      const el = document.createElement('img');
-      el.src = "images/" + src;
-      el.alt = `intro-${idx}`;
-      el.loading = 'lazy';
-      el.classList.add("intro-highlight");
-      introGallery.appendChild(el);
-    });
   </script>
 </body>
 </html>
