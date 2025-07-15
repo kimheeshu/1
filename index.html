@@ -12,8 +12,8 @@
       --fg-light: #1a1a1a;
       --bg-dark: #121212;
       --fg-dark: #eaeaea;
-      --bg-gray: #2c2c2c;
-      --fg-gray: #ccc;
+      --bg-gray: #e5e5e5;
+      --fg-gray: #1a1a1a;
       --accent: #ff5c8a;
       --tr: 0.3s ease;
     }
@@ -27,6 +27,7 @@
     body.dark { background: var(--bg-dark); color: var(--fg-dark); }
     body.gray { background: var(--bg-gray); color: var(--fg-gray); }
     html { scroll-behavior: smooth; }
+    body.lb-open .toggle-theme { display: none; }
 
     .navbar {
       position: sticky;
@@ -38,7 +39,7 @@
       border-bottom: 1px solid #ddd;
     }
     body.dark .navbar { background: rgba(18,18,18,.9); border-bottom: 1px solid #333; }
-    body.gray .navbar { background: rgba(44,44,44,.9); border-bottom: 1px solid #444; }
+    body.gray .navbar { background: rgba(245,245,245,0.9); border-bottom: 1px solid #ccc; }
     .navbar a {
       color: inherit; text-decoration: none; font-weight: 500; position: relative;
     }
@@ -53,6 +54,27 @@
     h2 { font-size: 2rem; margin-bottom: 1rem; }
     h3 { font-size: 1.4rem; margin: 2rem 0 1rem; }
 
+    #intro-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .intro-highlight {
+      width: 100%;
+      max-width: 460px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .intro-highlight:hover {
+      transform: scale(1.02);
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -65,9 +87,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,.08);
       cursor: pointer;
     }
-    .gallery-item-wrapper {
-      position: relative;
-    }
+    .gallery-item-wrapper { position: relative; }
     .gallery-item-wrapper:hover::after {
       content: "눌러서 확대";
       position: absolute;
@@ -78,9 +98,6 @@
       padding: 3px 8px; border-radius: 6px;
     }
 
-    .slot-gallery-wrapper {
-      position: relative;
-    }
     .tooltip-hint {
       position: absolute;
       top: 50%; left: 50%;
@@ -95,24 +112,12 @@
       transition: opacity 0.3s;
       z-index: 10;
     }
-    .slot-gallery-wrapper:hover .tooltip-hint { opacity: 1; }
+    body.gray .tooltip-hint {
+      background: rgba(50, 50, 50, 0.6);
+      color: #fff;
+    }
 
-    .slot-gallery {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 12px;
-    }
-    .slot-gallery img {
-      flex: 0 0 auto;
-      width: 220px;
-      height: 180px;
-      border-radius: 12px;
-      scroll-snap-align: start;
-      box-shadow: 0 4px 10px rgba(0,0,0,.08);
-      cursor: pointer;
-    }
+    .slot-gallery-wrapper:hover .tooltip-hint { opacity: 1; }
 
     .toggle-theme {
       position: fixed;
@@ -125,7 +130,9 @@
       font-size: 20px; cursor: pointer;
       transition: all var(--tr); z-index: 3000;
     }
-    .toggle-theme:hover { background: var(--accent); color: #fff; }
+    .toggle-theme:hover {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
 
     .lightbox {
       position: fixed; inset: 0;
@@ -139,8 +146,12 @@
     }
     .lb-close {
       position: absolute; top: 20px; right: 20px;
-      background: none; border: none; color: #fff;
-      font-size: 32px; cursor: pointer; z-index: 3100;
+      background: none; border: none;
+      color: #fff; font-size: 32px;
+      cursor: pointer; z-index: 3100;
+    }
+    body.gray .lb-close {
+      color: #333;
     }
 
     footer {
@@ -170,7 +181,7 @@
   <div class="section" id="intro-top">
     <div class="slot-gallery-wrapper">
       <div class="tooltip-hint">좌우로 넘겨보세요</div>
-      <div id="intro-gallery" class="slot-gallery"></div>
+      <div id="intro-gallery"></div>
     </div>
   </div>
 
@@ -232,8 +243,32 @@
     const illustrationGallery = document.getElementById("illustration-gallery");
     const lightbox = document.getElementById("lightbox");
 
+    // 상단 강조 이미지
+    ["10.png", "3.png"].forEach((src, idx) => {
+      const el = document.createElement('img');
+      el.src = "images/" + src;
+      el.alt = `intro-${idx}`;
+      el.loading = 'lazy';
+      el.classList.add("intro-highlight");
+
+      el.addEventListener('click', () => {
+        lightbox.innerHTML = "<button class='lb-close' id='lb-close'>×</button>";
+        const modalEl = document.createElement('img');
+        modalEl.src = "images/" + src;
+        lightbox.appendChild(modalEl);
+        lightbox.style.display = "flex";
+        document.body.classList.add("lb-open");
+        document.getElementById("lb-close").onclick = () => {
+          lightbox.style.display = "none";
+          document.body.classList.remove("lb-open");
+        };
+      });
+
+      introGallery.appendChild(el);
+    });
+
     const images = [
-      "10.png", "15.png", "2.png", "3.png", "7.png", "8.png", "9.png",
+      "10.png", "15.png", "3.png", "7.png", "8.png", "9.png",
       "KakaoTalk_20250715_143145581.jpg", "KakaoTalk_20250715_143145581_01.jpg",
       "KakaoTalk_20250715_143145581_02.jpg", "KakaoTalk_20250715_143145581_03.jpg",
       "KakaoTalk_20250715_143145581_04.jpg", "KakaoTalk_20250715_143145581_05.jpg",
@@ -244,6 +279,7 @@
     ];
 
     images.forEach((src, idx) => {
+      if (["1.png", "2.png", "5.png"].includes(src)) return; // 제외
       const ext = src.split('.').pop().toLowerCase();
       const isVideo = ['mp4', 'webm'].includes(ext);
       const isAnimation = src.toLowerCase().includes('ani') || ext === 'gif' || isVideo;
@@ -265,7 +301,6 @@
       wrapper.className = 'gallery-item-wrapper';
       wrapper.appendChild(el);
 
-      if (idx < 6) introGallery.appendChild(el.cloneNode(true));
       (isAnimation ? animationGallery : illustrationGallery).appendChild(wrapper);
 
       el.addEventListener('click', () => {
@@ -280,12 +315,19 @@
         }
         lightbox.appendChild(modalEl);
         lightbox.style.display = "flex";
-        document.getElementById("lb-close").onclick = () => lightbox.style.display = "none";
+        document.body.classList.add("lb-open");
+        document.getElementById("lb-close").onclick = () => {
+          lightbox.style.display = "none";
+          document.body.classList.remove("lb-open");
+        };
       });
     });
 
     window.addEventListener("keydown", e => {
-      if (e.key === "Escape") lightbox.style.display = "none";
+      if (e.key === "Escape") {
+        lightbox.style.display = "none";
+        document.body.classList.remove("lb-open");
+      }
     });
   </script>
 </body>
