@@ -52,72 +52,36 @@
 
     .section { max-width: 960px; margin: 0 auto; padding: 64px 24px; }
     h2 { font-size: 2rem; margin-bottom: 1rem; }
-    h3 { font-size: 1.4rem; margin: 2rem 0 1rem; }
 
     #intro-gallery {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
       justify-content: center;
-      margin-bottom: 32px;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding: 0 16px;
     }
     .intro-highlight {
-      width: 100%;
-      max-width: 460px;
-      height: auto;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      flex: 1 1 45%;
+      max-width: 600px;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       transition: transform 0.3s ease;
       cursor: pointer;
     }
     .intro-highlight:hover {
       transform: scale(1.02);
     }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+    @media (max-width: 768px) {
+      .intro-highlight {
+        flex: 1 1 100%;
+        aspect-ratio: auto;
+        width: 100%;
+        height: auto;
+      }
     }
-    .gallery img, .gallery video {
-      width: 100%; height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,.08);
-      cursor: pointer;
-    }
-    .gallery-item-wrapper { position: relative; }
-    .gallery-item-wrapper:hover::after {
-      content: "눌러서 확대";
-      position: absolute;
-      bottom: 8px; left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.6);
-      color: #fff; font-size: 0.75rem;
-      padding: 3px 8px; border-radius: 6px;
-    }
-
-    .tooltip-hint {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.65);
-      color: #fff;
-      font-size: 0.9rem;
-      padding: 6px 10px;
-      border-radius: 8px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 10;
-    }
-    body.gray .tooltip-hint {
-      background: rgba(50, 50, 50, 0.6);
-      color: #fff;
-    }
-
-    .slot-gallery-wrapper:hover .tooltip-hint { opacity: 1; }
 
     .toggle-theme {
       position: fixed;
@@ -133,38 +97,6 @@
     .toggle-theme:hover {
       background: var(--accent); color: #fff; border-color: var(--accent);
     }
-
-    .lightbox {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.9);
-      display: none; align-items: center; justify-content: center;
-      z-index: 2000; flex-direction: column;
-    }
-    .lightbox img, .lightbox video {
-      max-width: 90%; max-height: 80vh;
-      border-radius: 12px; margin-bottom: 20px;
-    }
-    .lb-close {
-      position: absolute; top: 20px; right: 20px;
-      background: none; border: none;
-      color: #fff; font-size: 32px;
-      cursor: pointer; z-index: 3100;
-    }
-    body.gray .lb-close {
-      color: #333;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: .9rem;
-      color: #aaa;
-    }
-    .license {
-      font-size: .8rem;
-      margin-top: 5px;
-      color: #777;
-    }
   </style>
 </head>
 <body class="dark">
@@ -173,47 +105,27 @@
   <nav class="navbar">
     <a href="#intro">소개</a>
     <a href="#projects">프로젝트</a>
-    <a href="#animation-gallery">애니메이션</a>
-    <a href="#illustration-gallery">일러스트</a>
     <a href="#contact">문의</a>
   </nav>
 
   <div class="section" id="intro-top">
-    <div class="slot-gallery-wrapper">
-      <div class="tooltip-hint">좌우로 넘겨보세요</div>
-      <div id="intro-gallery"></div>
-    </div>
+    <div id="intro-gallery"></div>
   </div>
 
   <section class="section" id="intro">
     <h2>소개</h2>
-    <p>
-      안녕하세요,<br>감각적인 비주얼과 메시지를 담아내는 일러스트레이터 <strong>김희수</strong>입니다.<br><br>
-      브랜드 일러스트, 캐릭터 디자인, 애니메이션 원화 등 다양한 분야를 통해 감성과 실용성을 함께 표현합니다.<br>
-      그림을 통해 전달하고자 하는 감정과 목적이 자연스럽게 느껴지도록, 섬세한 디테일과 원활한 소통을 최우선으로 작업합니다.<br><br>
-      포트폴리오를 둘러보시고 좋은 인연으로 이어지길 바랍니다.
-    </p>
+    <p>감각적인 비주얼과 메시지를 담아내는 일러스트레이터 김희수입니다.</p>
   </section>
 
   <section class="section" id="projects">
     <h2>프로젝트</h2>
-    <h3>🎞 애니메이션</h3>
-    <div id="animation-gallery" class="gallery"></div>
-    <h3>🎨 일러스트</h3>
-    <div id="illustration-gallery" class="gallery"></div>
+    <p>작업물들...</p>
   </section>
 
   <section class="section" id="contact">
     <h2>문의</h2>
     <p>이메일: <a href="mailto:qnokkl12@naver.com" style="color:var(--accent)">qnokkl12@naver.com</a></p>
   </section>
-
-  <footer>
-    &copy; 2025 김희수. All rights reserved.<br>
-    <span class="license">본 사이트의 모든 이미지 및 콘텐츠는 저작권법에 의해 보호되며 무단 복제를 금합니다.</span>
-  </footer>
-
-  <div class="lightbox" id="lightbox"><button class="lb-close" id="lb-close">×</button></div>
 
   <script>
     feather.replace();
@@ -239,95 +151,13 @@
     };
 
     const introGallery = document.getElementById("intro-gallery");
-    const animationGallery = document.getElementById("animation-gallery");
-    const illustrationGallery = document.getElementById("illustration-gallery");
-    const lightbox = document.getElementById("lightbox");
-
-    // 상단 강조 이미지
     ["10.png", "3.png"].forEach((src, idx) => {
       const el = document.createElement('img');
       el.src = "images/" + src;
       el.alt = `intro-${idx}`;
       el.loading = 'lazy';
       el.classList.add("intro-highlight");
-
-      el.addEventListener('click', () => {
-        lightbox.innerHTML = "<button class='lb-close' id='lb-close'>×</button>";
-        const modalEl = document.createElement('img');
-        modalEl.src = "images/" + src;
-        lightbox.appendChild(modalEl);
-        lightbox.style.display = "flex";
-        document.body.classList.add("lb-open");
-        document.getElementById("lb-close").onclick = () => {
-          lightbox.style.display = "none";
-          document.body.classList.remove("lb-open");
-        };
-      });
-
       introGallery.appendChild(el);
-    });
-
-    const images = [
-      "10.png", "15.png", "3.png", "7.png", "8.png", "9.png",
-      "KakaoTalk_20250715_143145581.jpg", "KakaoTalk_20250715_143145581_01.jpg",
-      "KakaoTalk_20250715_143145581_02.jpg", "KakaoTalk_20250715_143145581_03.jpg",
-      "KakaoTalk_20250715_143145581_04.jpg", "KakaoTalk_20250715_143145581_05.jpg",
-      "KakaoTalk_20250715_143145581_06.jpg", "KakaoTalk_20250715_143145581_07.jpg",
-      "KakaoTalk_20250715_143145581_08.jpg", "KakaoTalk_20250715_143145581_09.jpg",
-      "KakaoTalk_20250715_143145581_10.jpg", "KakaoTalk_20250715_143145581_11.jpg",
-      "KakaoTalk_20250715_143145581_12.png", "KakaoTalk_20250715_143145581_13.png"
-    ];
-
-    images.forEach((src, idx) => {
-      if (["1.png", "2.png", "5.png"].includes(src)) return; // 제외
-      const ext = src.split('.').pop().toLowerCase();
-      const isVideo = ['mp4', 'webm'].includes(ext);
-      const isAnimation = src.toLowerCase().includes('ani') || ext === 'gif' || isVideo;
-
-      const el = isVideo ? document.createElement('video') : document.createElement('img');
-      el.src = "images/" + src;
-
-      if (isVideo) {
-        el.autoplay = true;
-        el.muted = true;
-        el.loop = true;
-        el.playsInline = true;
-      } else {
-        el.alt = `img-${idx}`;
-        el.loading = 'lazy';
-      }
-
-      const wrapper = document.createElement('div');
-      wrapper.className = 'gallery-item-wrapper';
-      wrapper.appendChild(el);
-
-      (isAnimation ? animationGallery : illustrationGallery).appendChild(wrapper);
-
-      el.addEventListener('click', () => {
-        lightbox.innerHTML = "<button class='lb-close' id='lb-close'>×</button>";
-        const modalEl = isVideo ? document.createElement('video') : document.createElement('img');
-        modalEl.src = "images/" + src;
-        if (isVideo) {
-          modalEl.autoplay = true;
-          modalEl.muted = true;
-          modalEl.loop = true;
-          modalEl.playsInline = true;
-        }
-        lightbox.appendChild(modalEl);
-        lightbox.style.display = "flex";
-        document.body.classList.add("lb-open");
-        document.getElementById("lb-close").onclick = () => {
-          lightbox.style.display = "none";
-          document.body.classList.remove("lb-open");
-        };
-      });
-    });
-
-    window.addEventListener("keydown", e => {
-      if (e.key === "Escape") {
-        lightbox.style.display = "none";
-        document.body.classList.remove("lb-open");
-      }
     });
   </script>
 </body>
